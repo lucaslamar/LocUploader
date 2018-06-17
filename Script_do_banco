@@ -7,7 +7,7 @@ nome_usuario varchar(180),
 senha varchar(15)
 );
 
-CREATE TABLE foto (id_foto int primary key not null, nome_de_caminho varchar(255), email varchar(150), foreign key (email) references usuario(email));
+CREATE TABLE foto (id_foto int auto-increment primary key not null, nome_de_caminho varchar(255), email varchar(150), foreign key (email) references usuario(email));
 
 INSERT INTO usuario (email, nome_usuario, senha) VALUES ("arthur@email.com", "Arthur", "cachorro123");
 

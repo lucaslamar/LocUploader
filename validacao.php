@@ -1,4 +1,5 @@
 <?php
+session_start();
 $nome_servidor = "127.0.0.1";
 $nome_usuario = "root";
 $senha = "";
@@ -6,10 +7,11 @@ $nome_banco = "locuploader";
 $conecta = new mysqli($nome_servidor, $nome_usuario, $senha, $nome_banco);
 if ($conecta->connect_error)
     die("Ocorreu uma falha na conexão". $conecta->connect_error."<br>");
-echo "conexão realizada com sucesso!<br>";
+
 
 $email = $_POST["email"];
 $senha = $_POST["senha"];
+
 if($email!=''&& $senha!='')
 {
  $query="select * from usuario where email='$email' and senha='$senha'";
@@ -35,5 +37,4 @@ else
     }
 }
 }
-$conecta->close();
 ?>

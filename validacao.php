@@ -10,7 +10,6 @@ echo "conexão realizada com sucesso!<br>";
 
 $email = $_POST["email"];
 $senha = $_POST["senha"];
-
 if($email!=''&& $senha!='')
 {
  $query="select * from usuario where email='$email' and senha='$senha'";
@@ -22,10 +21,19 @@ if($email!=''&& $senha!='')
 else
 {
 if(mysqli_num_rows($resultado)>0)
+    {
+    $_SESSION['email'] = $email;
+    $_SESSION['senha'] = $senha;
+    header('location:site.php');
+    }
     
-       echo "Bem-vindo!".$email."<br>";
-
-}     
-}  
+else
+    {
+    unset ($_SESSION['email']);
+    unset ($_SESSION['senha']);
+    header('location:login.html');
+    }
+}
+}
 $conecta->close();
 ?>

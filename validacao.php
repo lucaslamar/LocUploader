@@ -26,7 +26,7 @@ if(mysqli_num_rows($resultado)>0)
     {
     $_SESSION['email'] = $email;
     $_SESSION['senha'] = $senha;
-    header('location:site.php');
+    header('location:home.php');
     }
     
 else

@@ -6,7 +6,9 @@
 			LocUploader
         </title>
         <link rel="shortcut icon" href="favicon.ico">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
 		<style>
@@ -18,6 +20,7 @@
     width: 50%;
     padding: 70px;
 }
+
 	</style>
 	</head>
 	<body>
@@ -36,51 +39,33 @@
       				</li>
     			</ul>
   			</div>
-		</nav>
+        </nav>
 
 <div class="center">
 		<div class="card border-dark mb-3">
 	<div class="card" >
         <div class="card-body">
-
-
-<?php
-error_reporting(0);
-include_once("validacao.php");
-$email = $_SESSION['email'];
-
-
-    if(isset($_FILES["arquivo"])){
-
- 
-
-        $arquivo = $_FILES["arquivo"];
-        
-         
-        
-		// $pasta_dir = "arquivos/";//diretorio dos arquivos linux
-		$pasta_dir = "arquivos/";// windows
-        
-        //se nao existir a pasta ele cria uma
-        
-        if(!file_exists($pasta_dir)){
-        
-        mkdir($pasta_dir);
-        
-        }
-        
-         
-        
-        $arquivo_nome = $pasta_dir.$arquivo["name"];
-        
-         
-        
-        // Faz o upload da imagem
-        
-        move_uploaded_file($arquivo["tmp_name"], $arquivo_nome);
-         
-        
-        //aqui salva no banco o path da foto
+			<form action="busca.php" method="POST">
+			<table align="center">
+				<tr>
+					<td>
+					<i class="material-icons">search</i>
+					</td>
+					<td>
+						<p><input type="text" size="35" name="busca" placeholder="Escreva o ID da imagem"></p>
+					</td>
+				
+				
+					<td>
+						<p align="right"><input type="submit" name="pesquisar" value="pesquisar"></p>
+					</td>	
+				</tr>
+			</table>
+			</form>
+			<p align="center"><b>Suas imagens salvas</b></p>
+        <?php 
+include("validacao.php");
+            
 $nome_servidor = "127.0.0.1";
 $nome_usuario = "root";
 $senha = "";
@@ -88,25 +73,33 @@ $nome_banco = "locuploader";
 $conecta = new mysqli($nome_servidor, $nome_usuario, $senha, $nome_banco);
 if ($conecta->connect_error)
 die("Ocorreu uma falha na conexão". $conecta->connect_error."<br>");
-$insere = mysqli_query($conecta,"INSERT INTO foto (nome_de_caminho,email) VALUES ('$arquivo_nome','$email')");
-if(!$insere)
-    die("Query Failed: " .  mysqli_error($conecta));
-else
-echo "Upload realizado com sucesso!";
 
-
-
-    } 
-
+$email = $_SESSION['email'];
+$sql = mysqli_query($conecta,"SELECT * FROM foto WHERE email = '$email'"); 
+echo "<table  align='center' class='table '>";
+$i = 0; 
+echo "<tr>";
+    while($linha = mysqli_fetch_array($sql)) { 
+		$i =$i+1;
         
+		echo "<td><p align='center'><img src= '".$linha['nome_de_caminho']."' width='125' height='150'></p><br><p align='center'>".$linha['id_foto']."</p></td>";
+		if($i%3==0)
+  		{
+    		echo"</tr>"; 
+  		}
+	}
+	if($i%3!=0)
+{   
+   echo"</tr>";
+}  
+echo "</table>";
+mysqli_close($conecta);
 ?>
 
-</p>
-<a href="home.php"><button class="btn btn-dark">Retornar para a página inicial</button></a>
-</div>
-</div>
-</div>
-</div>
 
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>

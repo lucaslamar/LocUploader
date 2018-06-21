@@ -42,7 +42,7 @@
                 
                                     <td>Insira um endereço de E-mail:&nbsp;&nbsp;</td>
                 
-                                    <td><input type ="text" name="email" class="form-control-plaintext" placeholder="Insira seu e-mail"></td>
+                                    <td><input type ="email" name="email" class="form-control-plaintext" placeholder="Insira seu e-mail" required></td>
                 
                                 </tr>
                                 <tr>
@@ -50,14 +50,14 @@
                                             Digite um nome de usuário:&nbsp;&nbsp;
                                         </td>
                                         <td>
-                                            <input type="text" name="nome" class="form-control-plaintext" placeholder="Insira seu nome">
+                                            <input type="text" name="nome" class="form-control-plaintext" placeholder="Insira seu nome" required="Campo Obrigatorio" pattern=".{3,}">
                                         </td>
                                     </tr>
                                 <tr>
                 
                                     <td>Insira uma Senha:&nbsp;&nbsp;</td>
                 
-                                    <td><input type="password" name="senha" class="form-control-plaintext" placeholder="Insira sua senha"></td>
+                                    <td><input pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="senha"required title="mais caracteres de pelo menos um número e uma letra maiúscula e minúscula:" placeholder="Digite a senha"  class="form-control-plaintext"></td>
                 
                                 </tr>
                                 <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr
